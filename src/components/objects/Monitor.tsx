@@ -1,0 +1,97 @@
+import { useRef, useState } from 'react'
+import * as THREE from 'three'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useCursor } from '@react-three/drei'
+import { useStore } from '../../store/useStore'
+import { useInteraction } from '../../hooks/useInteraction'
+
+const POSITION: [number, number, number] = [0, 1.1, -1.8]
+
+export function Monitor() {
+  const groupRef = useRef<THREE.Group>(null)
+  const screenRef = useRef<THREE.MeshStandardMaterial>(null)
+  const { camera } = useThree()
+  const { focusObject, isAnimating } = useInteraction()
+  const hoveredObject = useStore((s) => s.hoveredObject)
+  const setHoveredObject = useStore((s) => s.setHoveredObject)
+  const focusedObject = useStore((s) => s.focusedObject)
+
+  const [hovered, setHovered] = useState(false)
+  useCursor(hovered)
+
+  const isHovered = hoveredObject === 'monitor'
+  const isFocused = focusedObject === 'monitor'
+
+  useFrame(() => {
+    if (!screenRef.current) return
+    const targetIntensity = isFocused ? 1.2 : isHovered ? 0.6 : 0.15
+    screenRef.current.emissiveIntensity = THREE.MathUtils.lerp(
+      screenRef.current.emissiveIntensity,
+      targetIntensity,
+      0.08
+    )
+  })
+
+  const handleClick = () => {
+    if (isAnimating.current) return
+    const targetPos = new THREE.Vector3(0, 1.3, -1.0)
+    const targetLookAt = new THREE.Vector3(0, 1.1, -1.8)
+    focusObject('monitor', 'projects', camera, targetPos, targetLookAt)
+  }
+
+  return (
+    <group
+      ref={groupRef}
+      position={POSITION}
+      onPointerEnter={(e) => {
+        e.stopPropagation()
+        setHovered(true)
+        setHoveredObject('monitor')
+      }}
+      onPointerLeave={(e) => {
+        e.stopPropagation()
+        setHovered(false)
+        setHoveredObject(null)
+      }}
+      onClick={(e) => {
+        e.stopPropagation()
+        handleClick()
+      }}
+    >
+      {/* Screen */}
+      <mesh position={[0, 0.28, 0]}>
+        <boxGeometry args={[0.9, 0.52, 0.03]} />
+        <meshStandardMaterial color="#1a1a2e" />
+      </mesh>
+
+      {/* Screen face (front) */}
+      <mesh position={[0, 0.28, 0.016]}>
+        <planeGeometry args={[0.84, 0.47]} />
+        <meshStandardMaterial
+          ref={screenRef}
+          color="#0a0a1a"
+          emissive="#7ec8e3"
+          emissiveIntensity={0.15}
+        />
+      </mesh>
+
+      {/* Bezel / frame */}
+      <mesh position={[0, 0.28, -0.005]}>
+        <boxGeometry args={[0.94, 0.56, 0.02]} />
+        <meshStandardMaterial color="#2a2a3e" />
+      </mesh>
+
+      {/* Stand neck */}
+      <mesh position={[0, -0.05, 0]}>
+        <boxGeometry args={[0.06, 0.15, 0.04]} />
+        <meshStandardMaterial color="#2a2a3e" />
+      </mesh>
+
+      {/* Stand base */}
+      <mesh position={[0, -0.13, 0.05]}>
+        <boxGeometry args={[0.3, 0.02, 0.18]} />
+        <meshStandardMaterial color="#2a2a3e" />
+      </mesh>
+    </group>
+  )
+}
