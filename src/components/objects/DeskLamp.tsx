@@ -72,19 +72,25 @@ export function DeskLamp() {
       {/* Base */}
       <mesh position={[0, 0.01, 0]}>
         <cylinderGeometry args={[0.05, 0.06, 0.02, 16]} />
-        <meshStandardMaterial color="#2a2a3e" metalness={0.6} roughness={0.3} />
+        <meshStandardMaterial color="#2D3748" metalness={0.6} roughness={0.3} />
       </mesh>
 
       {/* Arm (lower) */}
       <mesh position={[0, 0.12, 0]}>
         <cylinderGeometry args={[0.008, 0.008, 0.2, 8]} />
-        <meshStandardMaterial color="#3a3a4e" metalness={0.5} roughness={0.4} />
+        <meshStandardMaterial color="#2D3748" metalness={0.5} roughness={0.4} />
+      </mesh>
+
+      {/* Arm joint */}
+      <mesh position={[0, 0.22, 0]}>
+        <sphereGeometry args={[0.012, 8, 8]} />
+        <meshStandardMaterial color="#4A5568" metalness={0.5} roughness={0.4} />
       </mesh>
 
       {/* Arm (upper, angled) */}
       <mesh position={[0.04, 0.26, 0]} rotation={[0, 0, -0.5]}>
         <cylinderGeometry args={[0.007, 0.007, 0.16, 8]} />
-        <meshStandardMaterial color="#3a3a4e" metalness={0.5} roughness={0.4} />
+        <meshStandardMaterial color="#2D3748" metalness={0.5} roughness={0.4} />
       </mesh>
 
       {/* Shade (cone) */}
@@ -92,8 +98,8 @@ export function DeskLamp() {
         <coneGeometry args={[0.05, 0.06, 16, 1, true]} />
         <meshStandardMaterial
           ref={shadeRef}
-          color="#1a1a2e"
-          emissive="#ffa500"
+          color="#2D3748"
+          emissive="#FFB86C"
           emissiveIntensity={0}
           side={THREE.DoubleSide}
         />

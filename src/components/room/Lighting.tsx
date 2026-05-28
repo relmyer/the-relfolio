@@ -10,20 +10,20 @@ interface LightingProps {
 
 const CONFIGS = {
   evening: {
-    spotIntensity: 2,
-    spotColor: new THREE.Color('#FFA54F'),
-    ambientIntensity: 0.3,
-    ambientColor: new THREE.Color('#FFF5E6'),
-    fillIntensity: 0.15,
+    spotIntensity: 2.5,
+    spotColor: new THREE.Color('#FFB86C'),
+    ambientIntensity: 0.45,
+    ambientColor: new THREE.Color('#FFF8F0'),
+    fillIntensity: 0.2,
     fillColor: new THREE.Color('#FFE0B2'),
   },
   night: {
-    spotIntensity: 0.8,
-    spotColor: new THREE.Color('#FFA54F'),
-    ambientIntensity: 0.1,
-    ambientColor: new THREE.Color('#8EA8C8'),
-    fillIntensity: 0.05,
-    fillColor: new THREE.Color('#6B7FA0'),
+    spotIntensity: 1.0,
+    spotColor: new THREE.Color('#88CCFF'),
+    ambientIntensity: 0.15,
+    ambientColor: new THREE.Color('#7EC8E3'),
+    fillIntensity: 0.08,
+    fillColor: new THREE.Color('#5B8FB9'),
   },
 } as const
 

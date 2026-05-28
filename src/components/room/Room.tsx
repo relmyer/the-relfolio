@@ -20,12 +20,14 @@ const ROOM_DEPTH = 5
 const WALL_THICKNESS = 0.08
 
 const COLORS = {
-  floor: '#3B2617',
-  wall: '#E8E0D4',
-  ceiling: '#D9D2C7',
-  desk: '#4A3222',
-  shelf: '#5C3A24',
-  sideTable: '#4A3222',
+  floor: '#4A4038',        // warm dark wood
+  wall: '#E8E0D4',         // warm off-white for side walls
+  backWall: '#4ECDC4',     // teal/turquoise accent wall (behind monitor)
+  ceiling: '#E8E0D4',
+  desk: '#8B6F4E',         // warm medium wood
+  deskTop: '#A0845C',      // lighter wood top surface
+  shelf: '#6B8F71',        // muted green shelf
+  sideTable: '#E8B89D',    // peachy/warm side table
 } as const
 
 export function Room() {
@@ -38,7 +40,7 @@ export function Room() {
       {/* ── Floor ── */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[ROOM_WIDTH, ROOM_DEPTH]} />
-        <meshStandardMaterial color={COLORS.floor} roughness={0.8} />
+        <meshStandardMaterial color={COLORS.floor} roughness={0.85} metalness={0.05} />
       </mesh>
 
       {/* ── Ceiling ── */}
@@ -51,14 +53,32 @@ export function Room() {
         <meshStandardMaterial color={COLORS.ceiling} roughness={0.9} />
       </mesh>
 
-      {/* ── Back wall (facing camera) ── */}
+      {/* ── Back wall (facing camera) — teal accent wall ── */}
       <mesh
         position={[0, ROOM_HEIGHT / 2, -ROOM_DEPTH / 2]}
         receiveShadow
       >
         <boxGeometry args={[ROOM_WIDTH, ROOM_HEIGHT, WALL_THICKNESS]} />
-        <meshStandardMaterial color={COLORS.wall} roughness={0.85} />
+        <meshStandardMaterial color={COLORS.backWall} roughness={0.85} />
       </mesh>
+
+      {/* ── Pegboard pegs on back wall ── */}
+      {Array.from({ length: 8 }).flatMap((_, col) =>
+        Array.from({ length: 5 }).map((_, row) => (
+          <mesh
+            key={`peg-${col}-${row}`}
+            position={[
+              -1.0 + col * 0.25 + 0.125,
+              1.2 + row * 0.25 + 0.125,
+              -ROOM_DEPTH / 2 + WALL_THICKNESS / 2 + 0.01,
+            ]}
+            rotation={[Math.PI / 2, 0, 0]}
+          >
+            <cylinderGeometry args={[0.015, 0.015, 0.02, 8]} />
+            <meshStandardMaterial color="#3BB5AD" roughness={0.6} />
+          </mesh>
+        ))
+      )}
 
       {/* ── Front wall (behind camera) ── */}
       <mesh position={[0, ROOM_HEIGHT / 2, ROOM_DEPTH / 2]}>
@@ -112,7 +132,7 @@ export function Room() {
 
 /* ── Desk: centered at x=0, z=-1.5, desktop surface at y~0.75 ── */
 
-const DESK_TOP_THICKNESS = 0.05
+const DESK_TOP_THICKNESS = 0.06
 const DESK_WIDTH = 1.6
 const DESK_DEPTH = 0.8
 const DESK_HEIGHT = 0.75
@@ -133,7 +153,7 @@ function Desk() {
         receiveShadow
       >
         <boxGeometry args={[DESK_WIDTH, DESK_TOP_THICKNESS, DESK_DEPTH]} />
-        <meshStandardMaterial color={COLORS.desk} roughness={0.7} />
+        <meshStandardMaterial color={COLORS.deskTop} roughness={0.65} />
       </mesh>
 
       {/* Four legs */}
@@ -206,6 +226,29 @@ function BookShelf() {
         >
           <boxGeometry args={[innerWidth, SHELF_BOARD, SHELF_DEPTH]} />
           <meshStandardMaterial color={COLORS.shelf} roughness={0.75} />
+        </mesh>
+      ))}
+
+      {/* Decorative books on shelves */}
+      {([
+        { x: -0.22, shelf: 3, h: 0.28, w: 0.05, color: '#E85002' },
+        { x: -0.14, shelf: 3, h: 0.32, w: 0.04, color: '#3B82F6' },
+        { x: -0.07, shelf: 3, h: 0.26, w: 0.05, color: '#10B981' },
+        { x: 0.08,  shelf: 4, h: 0.30, w: 0.04, color: '#F59E0B' },
+        { x: 0.15,  shelf: 4, h: 0.34, w: 0.05, color: '#8B5CF6' },
+        { x: 0.23,  shelf: 4, h: 0.27, w: 0.04, color: '#EC4899' },
+      ] as const).map((book, i) => (
+        <mesh
+          key={`book-${i}`}
+          position={[
+            book.x,
+            book.shelf * spacing + SHELF_BOARD / 2 + book.h / 2,
+            0,
+          ]}
+          castShadow
+        >
+          <boxGeometry args={[book.w, book.h, SHELF_DEPTH * 0.75]} />
+          <meshStandardMaterial color={book.color} roughness={0.8} />
         </mesh>
       ))}
     </group>

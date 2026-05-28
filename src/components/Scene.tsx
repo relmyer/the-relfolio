@@ -22,8 +22,8 @@ export function Scene() {
       gl={{ antialias: !isMobile, alpha: false }}
       style={{ position: 'fixed', top: 0, left: 0 }}
     >
-      <color attach="background" args={['#1a1a2e']} />
-      <fog attach="fog" args={['#1a1a2e', 4, 12]} />
+      <color attach="background" args={['#2A2A35']} />
+      <fog attach="fog" args={['#2A2A35', 5, 14]} />
 
       <CameraController />
 

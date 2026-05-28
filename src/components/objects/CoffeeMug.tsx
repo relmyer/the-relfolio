@@ -62,22 +62,32 @@ export function CoffeeMug() {
         <cylinderGeometry args={[0.035, 0.03, 0.08, 16]} />
         <meshStandardMaterial
           ref={bodyRef}
-          color="#e8e0d4"
-          emissive="#ffeedd"
+          color="#FFFFFF"
+          emissive="#FFFFFF"
           emissiveIntensity={0}
         />
+      </mesh>
+
+      {/* X mark on mug (like reference) */}
+      <mesh position={[0, 0.04, 0.036]} rotation={[0, 0, Math.PI / 4]}>
+        <boxGeometry args={[0.025, 0.003, 0.003]} />
+        <meshStandardMaterial color="#2D3748" />
+      </mesh>
+      <mesh position={[0, 0.04, 0.036]} rotation={[0, 0, -Math.PI / 4]}>
+        <boxGeometry args={[0.025, 0.003, 0.003]} />
+        <meshStandardMaterial color="#2D3748" />
       </mesh>
 
       {/* Coffee surface */}
       <mesh position={[0, 0.078, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.032, 16]} />
-        <meshStandardMaterial color="#3e2723" />
+        <meshStandardMaterial color="#5C3A24" />
       </mesh>
 
       {/* Handle (torus) */}
       <mesh position={[0.045, 0.04, 0]} rotation={[0, 0, Math.PI / 2]}>
         <torusGeometry args={[0.022, 0.006, 8, 12]} />
-        <meshStandardMaterial color="#e8e0d4" />
+        <meshStandardMaterial color="#FFFFFF" />
       </mesh>
 
       {/* Floating message */}

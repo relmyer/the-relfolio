@@ -58,39 +58,48 @@ export function Monitor() {
         handleClick()
       }}
     >
+      {/* Bezel / frame */}
+      <mesh position={[0, 0.28, -0.005]}>
+        <boxGeometry args={[0.96, 0.58, 0.025]} />
+        <meshStandardMaterial color="#E8E0D4" roughness={0.5} />
+      </mesh>
+
       {/* Screen */}
       <mesh position={[0, 0.28, 0]}>
         <boxGeometry args={[0.9, 0.52, 0.03]} />
-        <meshStandardMaterial color="#1a1a2e" />
+        <meshStandardMaterial color="#0D1117" />
       </mesh>
 
-      {/* Screen face (front) */}
+      {/* Screen face (front) — vibrant glow */}
       <mesh position={[0, 0.28, 0.016]}>
         <planeGeometry args={[0.84, 0.47]} />
         <meshStandardMaterial
           ref={screenRef}
-          color="#0a0a1a"
-          emissive="#7ec8e3"
-          emissiveIntensity={0.15}
+          color="#0D1117"
+          emissive="#4ECDC4"
+          emissiveIntensity={0.2}
         />
       </mesh>
 
-      {/* Bezel / frame */}
-      <mesh position={[0, 0.28, -0.005]}>
-        <boxGeometry args={[0.94, 0.56, 0.02]} />
-        <meshStandardMaterial color="#2a2a3e" />
-      </mesh>
+      {/* Screen light splash (subtle glow) */}
+      <pointLight
+        position={[0, 0.28, 0.15]}
+        color="#4ECDC4"
+        intensity={0.15}
+        distance={1.5}
+        decay={2}
+      />
 
       {/* Stand neck */}
       <mesh position={[0, -0.05, 0]}>
         <boxGeometry args={[0.06, 0.15, 0.04]} />
-        <meshStandardMaterial color="#2a2a3e" />
+        <meshStandardMaterial color="#C0C0C0" metalness={0.3} roughness={0.5} />
       </mesh>
 
       {/* Stand base */}
       <mesh position={[0, -0.13, 0.05]}>
         <boxGeometry args={[0.3, 0.02, 0.18]} />
-        <meshStandardMaterial color="#2a2a3e" />
+        <meshStandardMaterial color="#C0C0C0" metalness={0.3} roughness={0.5} />
       </mesh>
     </group>
   )
