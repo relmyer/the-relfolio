@@ -40,67 +40,140 @@ export function Monitor() {
   }
 
   return (
-    <group
-      ref={groupRef}
-      position={POSITION}
-      onPointerEnter={(e) => {
-        e.stopPropagation()
-        setHovered(true)
-        setHoveredObject('monitor')
-      }}
-      onPointerLeave={(e) => {
-        e.stopPropagation()
-        setHovered(false)
-        setHoveredObject(null)
-      }}
-      onClick={(e) => {
-        e.stopPropagation()
-        handleClick()
-      }}
-    >
-      {/* Bezel / frame */}
-      <mesh position={[0, 0.28, -0.005]}>
-        <boxGeometry args={[0.96, 0.58, 0.025]} />
-        <meshStandardMaterial color="#E8E0D4" roughness={0.5} />
-      </mesh>
+    <group>
+      {/* === CRT Monitor === */}
+      <group
+        ref={groupRef}
+        position={POSITION}
+        onPointerEnter={(e) => {
+          e.stopPropagation()
+          setHovered(true)
+          setHoveredObject('monitor')
+        }}
+        onPointerLeave={(e) => {
+          e.stopPropagation()
+          setHovered(false)
+          setHoveredObject(null)
+        }}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleClick()
+        }}
+      >
+        {/* CRT body — big boxy beige case */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.7, 0.55, 0.45]} />
+          <meshStandardMaterial color="#E8DCC8" roughness={0.7} />
+        </mesh>
 
-      {/* Screen */}
-      <mesh position={[0, 0.28, 0]}>
-        <boxGeometry args={[0.9, 0.52, 0.03]} />
-        <meshStandardMaterial color="#0D1117" />
-      </mesh>
+        {/* Front bezel — slightly smaller, slightly forward */}
+        <mesh position={[0, 0, 0.2]}>
+          <boxGeometry args={[0.65, 0.5, 0.06]} />
+          <meshStandardMaterial color="#D4C8B0" roughness={0.6} />
+        </mesh>
 
-      {/* Screen face (front) — vibrant glow */}
-      <mesh position={[0, 0.28, 0.016]}>
-        <planeGeometry args={[0.84, 0.47]} />
-        <meshStandardMaterial
-          ref={screenRef}
-          color="#0D1117"
-          emissive="#4ECDC4"
-          emissiveIntensity={0.2}
-        />
-      </mesh>
+        {/* Screen inset — green-tinted emissive glow */}
+        <mesh position={[0, 0.02, 0.235]}>
+          <planeGeometry args={[0.52, 0.4]} />
+          <meshStandardMaterial
+            ref={screenRef}
+            color="#0D1117"
+            emissive="#4ECDC4"
+            emissiveIntensity={0.2}
+          />
+        </mesh>
 
-      {/* Screen light splash (subtle glow) */}
-      <pointLight
-        position={[0, 0.28, 0.15]}
-        color="#4ECDC4"
-        intensity={0.15}
-        distance={1.5}
-        decay={2}
-      />
+        {/* Power LED — tiny sphere at bottom-right of bezel */}
+        <mesh position={[0.25, -0.2, 0.235]}>
+          <sphereGeometry args={[0.008, 12, 12]} />
+          <meshStandardMaterial
+            color="#4ADE80"
+            emissive="#4ADE80"
+            emissiveIntensity={2}
+          />
+        </mesh>
+      </group>
 
-      {/* Stand neck */}
-      <mesh position={[0, -0.05, 0]}>
-        <boxGeometry args={[0.06, 0.15, 0.04]} />
-        <meshStandardMaterial color="#C0C0C0" metalness={0.3} roughness={0.5} />
-      </mesh>
+      {/* === PC Tower === */}
+      <group position={[0, 0.35, -1.8]}>
+        {/* Tower case */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.25, 0.35, 0.4]} />
+          <meshStandardMaterial color="#E8DCC8" roughness={0.7} />
+        </mesh>
 
-      {/* Stand base */}
-      <mesh position={[0, -0.13, 0.05]}>
-        <boxGeometry args={[0.3, 0.02, 0.18]} />
-        <meshStandardMaterial color="#C0C0C0" metalness={0.3} roughness={0.5} />
-      </mesh>
+        {/* Drive bay 1 (upper) */}
+        <mesh position={[0, 0.06, 0.201]}>
+          <boxGeometry args={[0.18, 0.02, 0.005]} />
+          <meshStandardMaterial color="#D4C8B0" roughness={0.5} />
+        </mesh>
+
+        {/* Drive bay 2 (lower) */}
+        <mesh position={[0, 0.02, 0.201]}>
+          <boxGeometry args={[0.18, 0.02, 0.005]} />
+          <meshStandardMaterial color="#D4C8B0" roughness={0.5} />
+        </mesh>
+
+        {/* Floppy drive slot */}
+        <mesh position={[0, -0.04, 0.201]}>
+          <boxGeometry args={[0.15, 0.005, 0.003]} />
+          <meshStandardMaterial color="#888888" roughness={0.4} />
+        </mesh>
+
+        {/* Smiley badge */}
+        <mesh position={[0, -0.1, 0.201]}>
+          <sphereGeometry args={[0.015, 12, 12]} />
+          <meshStandardMaterial color="#FFD93D" roughness={0.3} />
+        </mesh>
+      </group>
+
+      {/* === Keyboard === */}
+      <group position={[0, 0.77, -1.25]} rotation={[-0.1, 0, 0]}>
+        {/* Keyboard body */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.45, 0.015, 0.15]} />
+          <meshStandardMaterial color="#F5F0E8" roughness={0.6} />
+        </mesh>
+
+        {/* Key group — left block */}
+        <mesh position={[-0.12, 0.009, -0.02]}>
+          <boxGeometry args={[0.15, 0.004, 0.08]} />
+          <meshStandardMaterial color="#E0D8CC" roughness={0.5} />
+        </mesh>
+
+        {/* Key group — center block */}
+        <mesh position={[0.06, 0.009, -0.02]}>
+          <boxGeometry args={[0.12, 0.004, 0.08]} />
+          <meshStandardMaterial color="#E0D8CC" roughness={0.5} />
+        </mesh>
+
+        {/* Key group — right small block */}
+        <mesh position={[0.17, 0.009, -0.02]}>
+          <boxGeometry args={[0.06, 0.004, 0.08]} />
+          <meshStandardMaterial color="#E0D8CC" roughness={0.5} />
+        </mesh>
+
+        {/* Key group — spacebar area */}
+        <mesh position={[0, 0.009, 0.04]}>
+          <boxGeometry args={[0.2, 0.004, 0.025]} />
+          <meshStandardMaterial color="#E0D8CC" roughness={0.5} />
+        </mesh>
+      </group>
+
+      {/* === Mouse === */}
+      <group position={[0.35, 0.77, -1.2]}>
+        {/* Mouse body */}
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.04, 0.02, 0.06]} />
+          <meshStandardMaterial color="#F5F0E8" roughness={0.6} />
+        </mesh>
+
+        {/* Scroll wheel line */}
+        <mesh position={[0, 0.012, -0.008]}>
+          <boxGeometry args={[0.01, 0.005, 0.005]} />
+          <meshStandardMaterial color="#CCCCCC" roughness={0.4} />
+        </mesh>
+      </group>
     </group>
   )
 }

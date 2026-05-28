@@ -22,8 +22,8 @@ export function Scene() {
       gl={{ antialias: !isMobile, alpha: false }}
       style={{ position: 'fixed', top: 0, left: 0 }}
     >
-      <color attach="background" args={['#2A2A35']} />
-      <fog attach="fog" args={['#2A2A35', 5, 14]} />
+      <color attach="background" args={['#E8F4F2']} />
+      <fog attach="fog" args={['#E8F4F2', 6, 16]} />
 
       <CameraController />
 
@@ -35,11 +35,11 @@ export function Scene() {
 
       <EffectComposer enabled={!isMobile}>
         <Bloom
-          luminanceThreshold={0.8}
+          luminanceThreshold={0.9}
           luminanceSmoothing={0.9}
-          intensity={0.4}
+          intensity={0.2}
         />
-        <Vignette darkness={0.5} offset={0.3} />
+        <Vignette darkness={0.2} offset={0.4} />
       </EffectComposer>
     </Canvas>
   )

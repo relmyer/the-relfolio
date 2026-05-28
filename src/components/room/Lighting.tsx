@@ -10,29 +10,33 @@ interface LightingProps {
 
 const CONFIGS = {
   evening: {
-    spotIntensity: 2.5,
-    spotColor: new THREE.Color('#FFB86C'),
-    ambientIntensity: 0.45,
+    spotIntensity: 3.0,
+    spotColor: new THREE.Color('#FFFFFF'),
+    ambientIntensity: 0.8,
     ambientColor: new THREE.Color('#FFF8F0'),
-    fillIntensity: 0.2,
-    fillColor: new THREE.Color('#FFE0B2'),
+    fillIntensity: 0.4,
+    fillColor: new THREE.Color('#87CEEB'),
+    sunIntensity: 1.2,
   },
   night: {
-    spotIntensity: 1.0,
-    spotColor: new THREE.Color('#88CCFF'),
-    ambientIntensity: 0.15,
-    ambientColor: new THREE.Color('#7EC8E3'),
-    fillIntensity: 0.08,
+    spotIntensity: 1.5,
+    spotColor: new THREE.Color('#FFB86C'),
+    ambientIntensity: 0.2,
+    ambientColor: new THREE.Color('#8EA8C8'),
+    fillIntensity: 0.1,
     fillColor: new THREE.Color('#5B8FB9'),
+    sunIntensity: 0,
   },
 } as const
 
+const SUN_COLOR = new THREE.Color('#FFF5E6')
 const LERP_SPEED = 3
 
 export function Lighting({ mood }: LightingProps) {
   const spotRef = useRef<THREE.SpotLight>(null)
   const ambientRef = useRef<THREE.AmbientLight>(null)
   const fillRef = useRef<THREE.PointLight>(null)
+  const sunRef = useRef<THREE.DirectionalLight>(null)
 
   useFrame((_, delta) => {
     const target = CONFIGS[mood]
@@ -63,6 +67,15 @@ export function Lighting({ mood }: LightingProps) {
         t
       )
       fillRef.current.color.lerp(target.fillColor, t)
+    }
+
+    if (sunRef.current) {
+      sunRef.current.intensity = THREE.MathUtils.lerp(
+        sunRef.current.intensity,
+        target.sunIntensity,
+        t
+      )
+      sunRef.current.color.lerp(SUN_COLOR, t)
     }
   })
 
@@ -99,13 +112,24 @@ export function Lighting({ mood }: LightingProps) {
         decay={2}
       />
 
+      {/* Directional sunlight — simulates window light from the right */}
+      <directionalLight
+        ref={sunRef}
+        position={[4, 3, -1]}
+        intensity={CONFIGS[mood].sunIntensity}
+        color="#FFF5E6"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+
       {/* Contact shadows under the desk area */}
       <ContactShadows
         position={[0, 0.005, -1.5]}
         width={3}
         height={2}
         far={2}
-        opacity={mood === 'evening' ? 0.4 : 0.25}
+        opacity={mood === 'evening' ? 0.5 : 0.25}
         blur={2}
         color="#1A1008"
       />

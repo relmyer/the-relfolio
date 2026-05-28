@@ -20,14 +20,14 @@ const ROOM_DEPTH = 5
 const WALL_THICKNESS = 0.08
 
 const COLORS = {
-  floor: '#4A4038',        // warm dark wood
-  wall: '#E8E0D4',         // warm off-white for side walls
-  backWall: '#4ECDC4',     // teal/turquoise accent wall (behind monitor)
-  ceiling: '#E8E0D4',
-  desk: '#8B6F4E',         // warm medium wood
-  deskTop: '#A0845C',      // lighter wood top surface
-  shelf: '#6B8F71',        // muted green shelf
-  sideTable: '#E8B89D',    // peachy/warm side table
+  floor: '#C4B89C',        // light warm wood/laminate
+  wall: '#F5F0E8',         // bright cream walls
+  backWall: '#3BBFB5',     // vivid teal pegboard
+  ceiling: '#F5F0E8',
+  desk: '#F5F0E8',         // white/cream desk
+  deskTop: '#F5F5F0',      // very light desk surface
+  shelf: '#7BC67E',        // bright green shelf (like the reference)
+  sideTable: '#7BC67E',    // matching green
 } as const
 
 export function Room() {
@@ -63,19 +63,19 @@ export function Room() {
       </mesh>
 
       {/* ── Pegboard pegs on back wall ── */}
-      {Array.from({ length: 8 }).flatMap((_, col) =>
-        Array.from({ length: 5 }).map((_, row) => (
+      {Array.from({ length: 12 }).flatMap((_, col) =>
+        Array.from({ length: 8 }).map((_, row) => (
           <mesh
             key={`peg-${col}-${row}`}
             position={[
-              -1.0 + col * 0.25 + 0.125,
-              1.2 + row * 0.25 + 0.125,
-              -ROOM_DEPTH / 2 + WALL_THICKNESS / 2 + 0.01,
+              -1.1 + col * 0.18 + 0.09,
+              0.9 + row * 0.18 + 0.09,
+              -ROOM_DEPTH / 2 + WALL_THICKNESS / 2 + 0.005,
             ]}
             rotation={[Math.PI / 2, 0, 0]}
           >
-            <cylinderGeometry args={[0.015, 0.015, 0.02, 8]} />
-            <meshStandardMaterial color="#3BB5AD" roughness={0.6} />
+            <cylinderGeometry args={[0.02, 0.02, 0.01, 12]} />
+            <meshStandardMaterial color="#1A8A82" roughness={0.4} />
           </mesh>
         ))
       )}
@@ -109,6 +109,9 @@ export function Room() {
 
       {/* ── Bookshelf on the left wall ── */}
       <BookShelf />
+
+      {/* ── Green desk organizer (right side of desk) ── */}
+      <DeskOrganizer />
 
       {/* ── Side table (right of desk) ── */}
       <SideTable />
@@ -153,7 +156,7 @@ function Desk() {
         receiveShadow
       >
         <boxGeometry args={[DESK_WIDTH, DESK_TOP_THICKNESS, DESK_DEPTH]} />
-        <meshStandardMaterial color={COLORS.deskTop} roughness={0.65} />
+        <meshStandardMaterial color={COLORS.deskTop} roughness={0.4} />
       </mesh>
 
       {/* Four legs */}
@@ -165,7 +168,7 @@ function Desk() {
       ].map(([x, y, z], i) => (
         <mesh key={i} position={[x, y, z]} castShadow>
           <boxGeometry args={[LEG_SIZE, legH, LEG_SIZE]} />
-          <meshStandardMaterial color={COLORS.desk} roughness={0.7} />
+          <meshStandardMaterial color="#E8E0D4" roughness={0.7} />
         </mesh>
       ))}
     </group>
@@ -248,6 +251,64 @@ function BookShelf() {
           castShadow
         >
           <boxGeometry args={[book.w, book.h, SHELF_DEPTH * 0.75]} />
+          <meshStandardMaterial color={book.color} roughness={0.8} />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
+/* ── Green desk organizer: right side of desk ── */
+
+function DeskOrganizer() {
+  const boxW = 0.3
+  const boxH = 0.3
+  const boxD = 0.25
+  const thick = 0.02
+
+  const books = [
+    { x: -0.07, h: 0.22, w: 0.03, color: '#E85002' },
+    { x: -0.02, h: 0.26, w: 0.03, color: '#3B82F6' },
+    { x: 0.03,  h: 0.20, w: 0.04, color: '#F59E0B' },
+    { x: 0.09,  h: 0.24, w: 0.03, color: '#EC4899' },
+  ] as const
+
+  return (
+    <group position={[0.95, 0.76, -1.6]}>
+      {/* Bottom */}
+      <mesh position={[0, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[boxW, thick, boxD]} />
+        <meshStandardMaterial color={COLORS.shelf} roughness={0.7} />
+      </mesh>
+      {/* Top */}
+      <mesh position={[0, boxH, 0]} castShadow>
+        <boxGeometry args={[boxW, thick, boxD]} />
+        <meshStandardMaterial color={COLORS.shelf} roughness={0.7} />
+      </mesh>
+      {/* Left side */}
+      <mesh position={[-boxW / 2 + thick / 2, boxH / 2, 0]} castShadow>
+        <boxGeometry args={[thick, boxH, boxD]} />
+        <meshStandardMaterial color={COLORS.shelf} roughness={0.7} />
+      </mesh>
+      {/* Right side */}
+      <mesh position={[boxW / 2 - thick / 2, boxH / 2, 0]} castShadow>
+        <boxGeometry args={[thick, boxH, boxD]} />
+        <meshStandardMaterial color={COLORS.shelf} roughness={0.7} />
+      </mesh>
+      {/* Back */}
+      <mesh position={[0, boxH / 2, -boxD / 2 + thick / 2]} castShadow>
+        <boxGeometry args={[boxW, boxH, thick]} />
+        <meshStandardMaterial color={COLORS.shelf} roughness={0.7} />
+      </mesh>
+
+      {/* Small books inside */}
+      {books.map((book, i) => (
+        <mesh
+          key={`org-book-${i}`}
+          position={[book.x, thick / 2 + book.h / 2, 0]}
+          castShadow
+        >
+          <boxGeometry args={[book.w, book.h, boxD * 0.7]} />
           <meshStandardMaterial color={book.color} roughness={0.8} />
         </mesh>
       ))}

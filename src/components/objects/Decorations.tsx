@@ -5,16 +5,20 @@ export function Decorations() {
     <group>
       <Cactus position={[0.65, 0.76, -1.7]} />
       <PenHolder position={[-0.55, 0.76, -1.65]} />
-      <Headphones position={[0.6, 0.78, -1.1]} />
-      <Calendar position={[0.72, 0.85, -1.5]} />
+      <Headphones position={[-0.5, 0.78, -1.1]} />
+      <Calendar position={[-0.65, 0.85, -1.5]} />
       <Speaker position={[1.8, 1.5, -1.8]} />
-      <WatermelonSlice position={[-0.15, 0.77, -0.85]} />
+      <WatermelonSlice position={[0.55, 0.77, -1.0]} />
       <FairyLights />
       <WallPoster position={[1.5, 1.8, -2.44]} />
       <PinnedPapers />
       <HeartFrame position={[-0.7, 0.8, -1.3]} />
       <Rug />
       <WallShelf position={[2.8, 1.2, -1.0]} />
+      <WhitePlantPot position={[0.8, 2.1, -2.42]} />
+      <WhitePlantPot position={[-0.9, 1.9, -2.42]} />
+      <TapeDispenser position={[0.95, 1.8, -2.42]} />
+      <GameController position={[0.3, 0.77, -1.05]} />
     </group>
   )
 }
@@ -439,6 +443,78 @@ function Rug() {
         <planeGeometry args={[0.5, 0.5]} />
         <meshStandardMaterial color="#D4956B" roughness={0.95} metalness={0} />
       </mesh>
+    </group>
+  )
+}
+
+function WhitePlantPot({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.035, 0.03, 0.05, 8]} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.5} />
+      </mesh>
+      <mesh position={[0, 0.03, 0]}>
+        <cylinderGeometry args={[0.033, 0.033, 0.005, 8]} />
+        <meshStandardMaterial color="#5C3A24" roughness={1} />
+      </mesh>
+      {[0, 1.2, 2.4, 3.6, 4.8].map((angle, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.cos(angle) * 0.01,
+            0.05 + i * 0.012,
+            Math.sin(angle) * 0.01,
+          ]}
+        >
+          <sphereGeometry args={[0.018 - i * 0.002, 5, 4]} />
+          <meshStandardMaterial
+            color={new THREE.Color().setHSL(0.35, 0.6, 0.35 + i * 0.05)}
+            roughness={0.8}
+          />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
+function TapeDispenser({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      <mesh>
+        <boxGeometry args={[0.06, 0.05, 0.04]} />
+        <meshStandardMaterial color="#3B82F6" roughness={0.4} />
+      </mesh>
+      <mesh position={[0.035, 0.005, 0]}>
+        <boxGeometry args={[0.015, 0.03, 0.035]} />
+        <meshStandardMaterial color="#2563EB" roughness={0.3} metalness={0.3} />
+      </mesh>
+    </group>
+  )
+}
+
+function GameController({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position} rotation={[0, 0.3, 0]}>
+      <mesh>
+        <boxGeometry args={[0.1, 0.015, 0.05]} />
+        <meshStandardMaterial color="#F5F5F0" roughness={0.5} />
+      </mesh>
+      <mesh position={[-0.025, 0.01, -0.01]}>
+        <cylinderGeometry args={[0.008, 0.008, 0.005, 8]} />
+        <meshStandardMaterial color="#D1D5DB" roughness={0.4} />
+      </mesh>
+      {[[0.02, 0.01, -0.015], [0.03, 0.01, -0.005], [0.01, 0.01, -0.005], [0.02, 0.01, 0.005]].map(
+        (pos, i) => (
+          <mesh key={i} position={pos as [number, number, number]}>
+            <sphereGeometry args={[0.004, 6, 6]} />
+            <meshStandardMaterial
+              color={['#EF4444', '#3B82F6', '#F59E0B', '#4ADE80'][i]}
+              roughness={0.4}
+            />
+          </mesh>
+        ),
+      )}
     </group>
   )
 }
