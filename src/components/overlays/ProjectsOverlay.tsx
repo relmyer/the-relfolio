@@ -5,7 +5,7 @@ export function ProjectsOverlay() {
   return (
     <div className={styles.monitorPanel}>
       <div className={styles.monitorHeader}>
-        RELMYER://PROJECTS <span className={styles.monitorCursor}>_</span>
+        EBRU://PROJECTS <span className={styles.monitorCursor}>_</span>
       </div>
 
       <div className={styles.projectGrid}>

@@ -10,7 +10,7 @@ export function LoadingScreen({ progress, onEnter }: LoadingScreenProps) {
 
   return (
     <div className={styles.loadingScreen}>
-      <h1 className={styles.loadingName}>Rel Meyer</h1>
+      <h1 className={styles.loadingName}>Ebru Altıner</h1>
       <p className={styles.loadingSubtitle}>Creative Studio</p>
 
       {!ready && (

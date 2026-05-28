@@ -1,13 +1,13 @@
 export const about = {
-  name: 'Rel Meyer',
-  role: 'UI/UX Designer & Developer',
-  location: 'Istanbul, Turkey',
-  bio: `Creative technologist blending design thinking with clean code. I craft digital experiences that feel intuitive, personal, and a little unexpected. Rooted in the intersection of Turkish visual culture and modern interaction design — I believe the best interfaces tell stories.`,
+  name: 'Ebru Altıner',
+  role: 'Product Designer • Engineer',
+  location: 'İzmir, Türkiye',
+  bio: `Hey! It’s me, Ebru — building and improving my skills in product design & engineering through UX, motion, interactions, frontend and digital experiences turning prototypes into smooth, pixel-perfect products while probably overthinking whether 2px feels right at 4am.`,
   values: [
-    'Curiosity-driven design',
-    'Craft over polish',
-    'Accessibility is not optional',
-    'Every pixel has a purpose',
+    'Pixel-perfect craft',
+    'Design × Engineering',
+    'Community-driven',
+    'Always learning',
   ],
 }
 
@@ -20,32 +20,69 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
-    company: 'Visibuy',
-    title: 'UI/UX Designer',
-    dates: '2024 – Present',
+    company: 'LiseUP',
+    title: 'Product Designer',
+    dates: 'Apr 2026 – Present',
     description:
-      'Designing e-commerce experiences that help shoppers see before they buy.',
+      'Designing product experiences at LiseUP in İzmir.',
   },
   {
     company: 'BLUESENSE',
-    title: 'Product Designer',
-    dates: '2023 – 2024',
+    title: 'UI/UX Designer · Intern',
+    dates: 'Jan 2026 – Mar 2026',
     description:
-      'Led design for IoT dashboard and mobile apps across the smart-building platform.',
+      'UI/UX design for an AI-powered beauty tech product. Mobile-first screens in Figma with clean, intuitive user flows. Harvard Innovation Labs 2026 semifinalist.',
   },
   {
     company: 'Software Persona',
-    title: 'Junior Frontend Developer',
-    dates: '2022 – 2023',
+    title: 'Software Developer · Intern',
+    dates: 'Feb 2026 – Mar 2026',
     description:
-      'Built responsive web apps and component libraries in React and Flutter.',
+      'Built applications with SQL, Flutter and more in İstanbul.',
+  },
+  {
+    company: 'Visibuy',
+    title: 'Product Designer · Intern',
+    dates: 'Oct 2025 – Mar 2026',
+    description:
+      'Designed wireframes, UI screens, and interactive flows for the e-commerce product. Remote role.',
   },
 ]
 
-export const education = {
-  target: 'Interaction Design — Politecnico di Milano',
-  note: 'Targeting MSc admission',
+export interface Education {
+  school: string
+  degree: string
+  dates: string
 }
+
+export const education: Education[] = [
+  {
+    school: 'İstanbul Üniversitesi',
+    degree: 'Computer Programming',
+    dates: '2025 – 2027',
+  },
+  {
+    school: 'Kırklareli Üniversitesi',
+    degree: 'B.Sc. Architecture',
+    dates: '2021 – 2024',
+  },
+]
+
+export const certifications = [
+  { name: 'Google UX Design', issuer: 'Google', date: 'Nov 2025' },
+  { name: "Sustain2Solve Summit'24 Hackathon", issuer: 'Sustain2Solve', date: 'Aug 2024' },
+]
+
+export const community = [
+  { role: 'Member', org: 'Women Techmakers', dates: 'Jun 2024 – Present' },
+  { role: 'Designer', org: 'GDG İzmir', dates: 'Nov 2024 – Aug 2025', description: 'Designed social media posts, ensured brand consistency, and supported event promotion.' },
+  { role: 'Flutter Mentor', org: 'Kodluyoruz (Hi-Kod)', dates: 'Sep 2024 – Mar 2025', description: 'Mentored beginners in Flutter development.' },
+  { role: 'Designer', org: 'Loopix Games', dates: 'Jan 2025 – Aug 2025', description: 'Game idea development, AI-assisted asset creation, and game design.' },
+  { role: 'Pixel Team', org: 'Pi Youth Association', dates: 'Sep 2024 – Present', description: 'Guiding ESC volunteers in Turkey, cross-cultural mentorship.' },
+  { role: 'Volunteer', org: 'WWF-Türkiye', dates: 'Aug 2025 – Present' },
+  { role: 'Volunteer', org: 'Lions Clubs International', dates: 'Nov 2025 – Present' },
+  { role: 'Member', org: 'Turkishe', dates: 'Sep 2024 – Present' },
+]
 
 export interface Project {
   id: string
@@ -112,22 +149,22 @@ export interface Skill {
 export const skills: Skill[] = [
   {
     category: 'Design',
-    items: ['Figma', 'Adobe Suite', 'Prototyping', 'Design Systems', 'User Research'],
+    items: ['Figma', 'Blender', 'Adobe After Effects', 'Prototyping', 'Design Systems'],
     color: '#E85002',
   },
   {
     category: 'Frontend',
-    items: ['React', 'TypeScript', 'Next.js', 'Three.js', 'CSS/SCSS'],
+    items: ['React', 'TypeScript', 'Three.js', 'CSS/SCSS', 'HTML'],
     color: '#3B82F6',
   },
   {
     category: 'Mobile',
-    items: ['Flutter', 'Dart', 'React Native', 'Firebase'],
+    items: ['Flutter', 'Dart', 'Firebase'],
     color: '#10B981',
   },
   {
-    category: 'Tools',
-    items: ['Git', 'Framer', 'Notion', 'Jira', 'VS Code'],
+    category: 'Engineering',
+    items: ['C#', 'SQL', 'Git', 'VS Code', 'Google Cloud'],
     color: '#8B5CF6',
   },
 ]
@@ -135,16 +172,16 @@ export const skills: Skill[] = [
 export const contact = {
   email: 'its.altnrbru@gmail.com',
   github: 'https://github.com/relmyer',
-  linkedin: '#',
+  linkedin: 'https://www.linkedin.com/in/ebru-alt%C4%B1ner/',
   behance: '#',
   dribbble: '#',
 }
 
 export const stickyNotes = [
-  { id: 'sticky-1', text: '"Design is not just what it looks like — design is how it works." — Steve Jobs', position: [0.3, 0.15, 0] as [number, number, number] },
-  { id: 'sticky-2', text: 'Currently: deep into Three.js rabbit holes', position: [-0.2, 0.1, 0] as [number, number, number] },
-  { id: 'sticky-3', text: 'Goal: Milano 2026 🇮🇹', position: [0.1, -0.1, 0] as [number, number, number] },
-  { id: 'sticky-4', text: 'Remember: ship > perfect', position: [-0.3, -0.05, 0] as [number, number, number] },
+  { id: 'sticky-1', text: 'Probably overthinking whether 2px feels right at 4am.', position: [0.3, 0.15, 0] as [number, number, number] },
+  { id: 'sticky-2', text: 'BLUESENSE → Harvard Innovation Labs 2026 semifinalist!', position: [-0.2, 0.1, 0] as [number, number, number] },
+  { id: 'sticky-3', text: 'Google UX Design certified ✅', position: [0.1, -0.1, 0] as [number, number, number] },
+  { id: 'sticky-4', text: 'Architecture grad turned product designer — the plot twist nobody expected.', position: [-0.3, -0.05, 0] as [number, number, number] },
 ]
 
 export const easterEggs = [
